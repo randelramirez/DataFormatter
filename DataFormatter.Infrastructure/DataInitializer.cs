@@ -24,7 +24,7 @@ namespace DataFormatter.Infrastructure
             suppliers.Add(new Supplier { Name = "Sony", Address = new Address { State = "Japan", Street = "Osaka", ZipCode = "999" } });
             suppliers.Add(new Supplier { Name = "Hewlett-Packard", Address = new Address { State = "Washington", Street = "Oregon", ZipCode = "214" } });
             suppliers.Add(new Supplier { Name = "Apple", Address = new Address { State = "Michigan", Street = "Osaka", ZipCode = "999" } });
-            suppliers.Add(new Supplier { Name = "Nike", Address = new Address { State = "Taiwan", Street = "Tainan", ZipCode = "434" } });
+            suppliers.Add(new Supplier { Name = "Nike", Address = new Address { State = "Taiwan", Street = "Taipei", ZipCode = "434" } });
             suppliers.Add(new Supplier { Name = "Ford", Address = new Address { State = "Florida", Street = "Miami", ZipCode = "679" } });
 
             var products = new List<Product>();

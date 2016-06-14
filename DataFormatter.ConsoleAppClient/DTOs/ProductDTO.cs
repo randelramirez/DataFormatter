@@ -19,7 +19,6 @@ namespace DataFormatter.ConsoleAppClient.DTOs
 
         public decimal Price { get; set; }
 
-        [XmlIgnore]
-        public Supplier Supplier { get; set; }
+        public SupplierDTO Supplier { get; set; }
     }
 }

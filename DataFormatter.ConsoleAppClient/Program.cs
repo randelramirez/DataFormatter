@@ -16,29 +16,57 @@ namespace DataFormatter.ConsoleAppClient
         static void Main(string[] args)
         {
             var dataContext = new DataContext();
-            dataContext.Configuration.LazyLoadingEnabled = false;
-            dataContext.Configuration.ProxyCreationEnabled = false;
-            var data = dataContext.Products.Include(p => p.Supplier).Select(p => new ProductDTO { Id = p.Id, Name = p.Name, Price = p.Price, Supplier = p.Supplier }).ToList();
+            //dataContext.Configuration.LazyLoadingEnabled = false;
+            //dataContext.Configuration.ProxyCreationEnabled = false;
 
-            var jsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            var x = data.ToList();
+
+            var json1 = SerializeJSON1(dataContext);
+            Console.WriteLine(json1);
+          
+            Console.ReadKey();
+
+        }
+
+        // EFContext lazy loading enabled
+        // proxies enabled
+        // using projection, anonymous object
+        static string SerializeJSON1(DataContext context)
+        {
+            var data = context.Products.Include(p => p.Supplier);
+
+            //to do: json self referecing loop error
+            // try solve first without using DTO
+            var toJson = data.Select(p => new { Id = p.Id, Price = p.Price, Supplier = p.Supplier }).ToList();
+            var jsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(toJson);
+            return jsonResult;
+        }
+
+        // EFContext lazy loading enabled
+        // EFContext proxy creation enabled
+        // using DTO
+        static string SerializeXML1(DataContext context)
+        {
+            var data = context.Products.Include(p => p.Supplier);
+            var toXml = data.ToList().Select(p => new ProductDTO
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                Supplier = new SupplierDTO
+                {
+                    Id = p.Supplier.Id,
+                    Name = p.Name,
+                    Address = p.Supplier.Address
+                }
+            }).ToList();
             var stringwriter = new System.IO.StringWriter();
-            System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(List<ProductDTO>));
-            xmlSerializer.Serialize(stringwriter, x);
-
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ProductDTO>));
+            xmlSerializer.Serialize(stringwriter, toXml);
 
             var xmlResult = stringwriter.ToString();
-
-            Console.WriteLine(jsonResult);
-
-            Console.WriteLine();
-            Console.WriteLine();
-
-            Console.WriteLine(xmlResult);
-            Console.ReadKey();
-            
+            return xmlResult;
         }
     }
 
-   
+
 }

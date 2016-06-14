@@ -29,13 +29,10 @@ namespace DataFormatter.ConsoleAppClient
 
         // EFContext lazy loading enabled
         // proxies enabled
-        // using projection, anonymous object
+        // using projection, anonymous object, no DTO.
         static string SerializeJSON1(DataContext context)
         {
             var data = context.Products.Include(p => p.Supplier);
-
-            //to do: json self referecing loop error
-            // try solve first without using DTO
             var toJson = data.Select(p => new { Id = p.Id, Price = p.Price, Supplier = p.Supplier }).ToList();
             var jsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(toJson);
             return jsonResult;

@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace DataFormatter.ConsoleAppClient.DTOs
 {
-    [XmlType(TypeName = "Product")]
+    [XmlType(TypeName = "ProductDTO")]
     [Serializable]
     public class ProductDTO
     {

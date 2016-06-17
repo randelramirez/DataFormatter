@@ -18,6 +18,6 @@ namespace DataFormatter.ConsoleAppClient.DTOs
         // it doesn't make sense to actually add {property: null} on the actual serialized string result.
         // but as stated above it might depend on the use case because what if we are serializing the SupplierDTO and we wanted to include its products
         // currently we are serializing Products entity on the client(console app)
-        public List<Product> Products { get; set; }
+        public List<ProductDTO> Products { get; set; }
     }
 }

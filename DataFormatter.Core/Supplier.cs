@@ -13,7 +13,6 @@ namespace DataFormatter.Core
         //we are serializing a Product type of object and Supplier contains a property List of Products. Similar to circular reference error during JSON serialization
         //note XmlSerializer does not support interfaces, so ICollection must be changed to List, otherwise use a DTO because XmlSerializer does not support anonymous objects
 
-        //[XmlIgnore]
         public virtual ICollection<Product> Products { get; set; }
 
         //note for json serialization

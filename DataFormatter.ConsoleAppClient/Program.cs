@@ -27,7 +27,7 @@ namespace DataFormatter.ConsoleAppClient
             #endregion
 
             var dataContext = new DataContext();
-            //dataContext.Configuration.LazyLoadingEnabled = false;
+            dataContext.Configuration.LazyLoadingEnabled = false;
             //dataContext.Configuration.ProxyCreationEnabled = false;
 
             // not working
@@ -36,6 +36,10 @@ namespace DataFormatter.ConsoleAppClient
 
             var json2 = SerializeJSON2(dataContext);
             Console.WriteLine(json2);
+
+            Console.WriteLine();
+            var xml1 = SerializeXML1(dataContext);
+            Console.WriteLine(xml1);
 
             Console.ReadKey();
 
@@ -67,7 +71,7 @@ namespace DataFormatter.ConsoleAppClient
         static string SerializeXML1(DataContext context)
         {
             var data = context.Products.Include(p => p.Supplier);
-            var toXml = data.ToList().Select(p => new ProductDTO
+            var toXml = data.Select(p => new ProductDTO
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -77,12 +81,13 @@ namespace DataFormatter.ConsoleAppClient
                     Id = p.Supplier.Id,
                     Name = p.Name,
                     Address = p.Supplier.Address
+                    
                 }
             }).ToList();
+
             var stringwriter = new System.IO.StringWriter();
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ProductDTO>));
             xmlSerializer.Serialize(stringwriter, toXml);
-
             var xmlResult = stringwriter.ToString();
             return xmlResult;
         }

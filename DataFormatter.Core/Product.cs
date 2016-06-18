@@ -15,7 +15,7 @@ namespace DataFormatter.Core
 
         public decimal Price { get; set; }
 
-        public  Supplier Supplier { get; set; }
+        public virtual  Supplier Supplier { get; set; }
 
     }
 }

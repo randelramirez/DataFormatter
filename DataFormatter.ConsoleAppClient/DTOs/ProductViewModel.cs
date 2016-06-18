@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace DataFormatter.ConsoleAppClient.DTOs
+namespace DataFormatter.ConsoleAppClient.ViewModels
 {
-    [XmlType(TypeName = "ProductDTO")]
+    [XmlType(TypeName = "Product")]
     [Serializable]
-    public class ProductDTO
+    public class ProductViewModel
     {
         [XmlElement("ID")]
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace DataFormatter.ConsoleAppClient.DTOs
 
         public decimal Price { get; set; }
 
-        public SupplierDTO Supplier { get; set; }
+        public SupplierViewModel Supplier { get; set; }
     }
 }

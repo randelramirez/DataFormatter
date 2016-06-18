@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace DataFormatter.ConsoleAppClient.DTOs
+namespace DataFormatter.ConsoleAppClient.ViewModels
 {
-    public class SupplierDTO  : BusinessPartner
+    public class SupplierViewModel  : BusinessPartner
     {
         // see comments on Supplier class
         // we can add XmlIgnore attribute below or simply in the client code omit this property when mapping to this dto
@@ -18,6 +18,6 @@ namespace DataFormatter.ConsoleAppClient.DTOs
         // it doesn't make sense to actually add {property: null} on the actual serialized string result.
         // but as stated above it might depend on the use case because what if we are serializing the SupplierDTO and we wanted to include its products
         // currently we are serializing Products entity on the client(console app)
-        public List<ProductDTO> Products { get; set; }
+        public List<ProductViewModel> Products { get; set; }
     }
 }

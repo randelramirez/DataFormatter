@@ -1,4 +1,4 @@
-﻿using DataFormatter.ConsoleAppClient.DTOs;
+﻿using DataFormatter.ConsoleAppClient.ViewModels;
 using DataFormatter.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,18 @@ namespace DataFormatter.ConsoleAppClient
         static string SerializeJSON2(DataContext context)
         {
             var data = context.Products.Include(p => p.Supplier);
-            var toJson = data.Select(p => new ProductDTO { Id = p.Id, Name = p.Name, Price = p.Price, Supplier = new SupplierDTO { Id = p.Supplier.Id, Name = p.Supplier.Name, Address = p.Supplier.Address } });
+            var toJson = data.Select(p => new ProductViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                Supplier = new SupplierViewModel
+                {
+                    Id = p.Supplier.Id,
+                    Name = p.Supplier.Name,
+                    Address = p.Supplier.Address
+                }
+            });
             var jsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(toJson);
             return jsonResult;
         }
@@ -71,12 +82,12 @@ namespace DataFormatter.ConsoleAppClient
         static string SerializeXML1(DataContext context)
         {
             var data = context.Products.Include(p => p.Supplier);
-            var toXml = data.Select(p => new ProductDTO
+            var toXml = data.Select(p => new ProductViewModel
             {
                 Id = p.Id,
                 Name = p.Name,
                 Price = p.Price,
-                Supplier = new SupplierDTO
+                Supplier = new SupplierViewModel
                 {
                     Id = p.Supplier.Id,
                     Name = p.Name,
@@ -86,7 +97,7 @@ namespace DataFormatter.ConsoleAppClient
             }).ToList();
 
             var stringwriter = new System.IO.StringWriter();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ProductDTO>));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ProductViewModel>));
             xmlSerializer.Serialize(stringwriter, toXml);
             var xmlResult = stringwriter.ToString();
             return xmlResult;

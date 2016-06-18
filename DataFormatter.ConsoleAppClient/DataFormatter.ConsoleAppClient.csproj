@@ -64,8 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTOs\ProductDTO.cs" />
-    <Compile Include="DTOs\SupplierDTO.cs" />
+    <Compile Include="DTOs\ProductViewModel.cs" />
+    <Compile Include="DTOs\SupplierViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

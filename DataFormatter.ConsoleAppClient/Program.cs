@@ -27,14 +27,14 @@ namespace DataFormatter.ConsoleAppClient
             #endregion
 
             var dataContext = new DataContext();
-            dataContext.Configuration.LazyLoadingEnabled = false;
+            //dataContext.Configuration.LazyLoadingEnabled = false;
             //dataContext.Configuration.ProxyCreationEnabled = false;
 
-            // not working
-            //var json1 = SerializeJSON1(dataContext);
-            //Console.WriteLine(json1);
+            //not working
+            var json1 = SerializeJSONAnonymousObject(dataContext);
+            Console.WriteLine(json1);
 
-            var json2 = SerializeJSON2(dataContext);
+            var json2 = SerializeJSONWithDTO(dataContext);
             Console.WriteLine(json2);
 
             Console.WriteLine();
@@ -49,7 +49,7 @@ namespace DataFormatter.ConsoleAppClient
         // proxies enabled
         // using projection, anonymous object, no DTO.
         // so far works when lazy loading = false
-        static string SerializeJSON1(DataContext context)
+        static string SerializeJSONAnonymousObject(DataContext context)
         {
             var data = context.Products.Include(p => p.Supplier);
             var toJson = data.Select(p => new { Id = p.Id, Price = p.Price, Supplier = p.Supplier }).ToList();
@@ -57,7 +57,7 @@ namespace DataFormatter.ConsoleAppClient
             return jsonResult;
         }
 
-        static string SerializeJSON2(DataContext context)
+        static string SerializeJSONWithDTO(DataContext context)
         {
             var data = context.Products.Include(p => p.Supplier);
             var toJson = data.Select(p => new ProductViewModel
